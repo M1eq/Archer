@@ -5,7 +5,7 @@ public class DragShooting : MonoBehaviour
 {
     public bool Dragging => _dragging;
 
-    public event UnityAction DragContinued;
+    public event UnityAction<Vector3, Vector2> DragContinued;
     public event UnityAction DragStarted;
     public event UnityAction DragEnded;
 
@@ -42,12 +42,13 @@ public class DragShooting : MonoBehaviour
 
     public void Drag()
     {
-        DragContinued?.Invoke();
         _endDragPoint = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
         _distance = Vector2.Distance(_startDragPoint, _endDragPoint);
         _direction = (_startDragPoint - _endDragPoint).normalized;
         _shootForce = _direction * _distance * _pushForce;
+
+        DragContinued?.Invoke(_archerTransform.position, _shootForce);
     }
 
     private void Start() => _mainCamera = Camera.main;

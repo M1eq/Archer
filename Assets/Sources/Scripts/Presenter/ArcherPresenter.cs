@@ -4,20 +4,21 @@ public class ArcherPresenter : MonoBehaviour
 {
     [SerializeField] private Arrow _arrow;
     [SerializeField] private DragShooting _dragShooting;
+    [SerializeField] private TrajectoryShower _trajectoryShower;
 
     private void OnDragStarted()
     {
-
+        _trajectoryShower.ShowTrajectory();
     }
 
-    private void OnDragContinued()
+    private void OnDragContinued(Vector3 archerPosition, Vector2 currentForce)
     {
-
+        _trajectoryShower.UpdateTrajectory(_arrow.transform.position, currentForce);
     }
 
     private void OnDragEnded()
     {
-
+        _trajectoryShower.HideTrajectory();
     }
 
     private void Update()
