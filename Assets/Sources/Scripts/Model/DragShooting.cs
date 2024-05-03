@@ -9,7 +9,8 @@ public class DragShooting : MonoBehaviour
     public event UnityAction DragStarted;
     public event UnityAction DragEnded;
 
-    [SerializeField] private Transform _archerTransform;
+    [SerializeField] private ArcherConfig _archerConfig;
+    [SerializeField] private Transform _aimPoint;
     [SerializeField] private Arrow _arrow;
 
     private bool _dragging;
@@ -20,15 +21,13 @@ public class DragShooting : MonoBehaviour
     private Vector2 _direction;
     private Vector2 _shootForce;
 
-    private float _pushForce = 4;
-
     public void StartDrag()
     {
         _dragging = true;
         DragStarted?.Invoke();
 
         _arrow.FreezePosition();
-        _startDragPoint = new Vector2(_archerTransform.position.x, _archerTransform.position.y);
+        _startDragPoint = new Vector2(_aimPoint.position.x, _aimPoint.position.y);
     }
 
     public void EndDrag()
@@ -46,9 +45,9 @@ public class DragShooting : MonoBehaviour
 
         _distance = Vector2.Distance(_startDragPoint, _endDragPoint);
         _direction = (_startDragPoint - _endDragPoint).normalized;
-        _shootForce = _direction * _distance * _pushForce;
+        _shootForce = _direction * _distance * _archerConfig.PushForce;
 
-        DragContinued?.Invoke(_archerTransform.position, _shootForce);
+        DragContinued?.Invoke(_aimPoint.position, _shootForce);
     }
 
     private void Start() => _mainCamera = Camera.main;

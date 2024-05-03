@@ -2,56 +2,33 @@ using UnityEngine;
 
 public class TrajectoryShower : MonoBehaviour
 {
-    [SerializeField] private int _dotsNumber;
-    [SerializeField] private float _dotSpacing;
-    [SerializeField] private GameObject _dotPrefab;
-    [SerializeField] private GameObject _dotsContainer;
+    [SerializeField] private ArcherConfig _archerConfig;
 
-    private Transform[] _dotsList;
-    private Vector2 _position;
+    private GameObject _dotsContainer;
+    private Transform[] _dotsArray;
+    private Vector2 _dotPosition;
     private float _timeStamp;
-    private float _dotMaxScale = 0.5f;
-    private float _dotMinScale = 0.1f;
 
     public void ShowTrajectory() => _dotsContainer.gameObject.SetActive(true);
     public void HideTrajectory() => _dotsContainer.gameObject.SetActive(false);
 
-    public void UpdateTrajectory(Vector3 arrowPosition, Vector2 currentForce)
+    public void Initialize(Transform[] createdDotsArray, GameObject dotsContainer)
     {
-        _timeStamp = _dotSpacing;
-
-        for (int i = 0; i < _dotsNumber; i++)
-        {
-            _position.x = (arrowPosition.x + currentForce.x * _timeStamp);
-            _position.y = (arrowPosition.y + currentForce.y * _timeStamp)-(Physics2D.gravity.magnitude * _timeStamp * _timeStamp) / 2;
-
-            _dotsList[i].position = _position;
-            _timeStamp += _dotSpacing;
-        }
+        _dotsArray = createdDotsArray;
+        _dotsContainer = dotsContainer;
     }
 
-    private void Start()
+    public void UpdateTrajectory(Vector3 aimPoint, Vector2 currentForce)
     {
-        HideTrajectory();
-        CreateDots();
-    }
+        _timeStamp = _archerConfig.SpacingBetweenDots;
 
-    private void CreateDots()
-    {
-        _dotsList = new Transform[_dotsNumber];
-        _dotPrefab.transform.localScale = Vector3.one * _dotMaxScale;
-
-        float scale = _dotMaxScale;
-        float scaleFactor = scale / _dotsNumber;
-
-        for (int i = 0; i < _dotsNumber; i++)
+        for (int i = 0; i < _dotsArray.Length; i++)
         {
-            _dotsList[i] = Instantiate(_dotPrefab, null).transform;
-            _dotsList[i].parent = _dotsContainer.transform;
+            _dotPosition.x = (aimPoint.x + currentForce.x * _timeStamp);
+            _dotPosition.y = (aimPoint.y + currentForce.y * _timeStamp) - (Physics2D.gravity.magnitude * _timeStamp * _timeStamp) / 2;
 
-            _dotsList[i].localScale = Vector3.one * scale;
-            if (scale > _dotMinScale)
-                scale -= scaleFactor;
+            _dotsArray[i].position = _dotPosition;
+            _timeStamp += _archerConfig.SpacingBetweenDots;
         }
     }
 }

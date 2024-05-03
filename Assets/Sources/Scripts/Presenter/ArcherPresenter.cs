@@ -5,15 +5,21 @@ public class ArcherPresenter : MonoBehaviour
     [SerializeField] private Arrow _arrow;
     [SerializeField] private DragShooting _dragShooting;
     [SerializeField] private TrajectoryShower _trajectoryShower;
+    [SerializeField] private TrajectoryDotsFactory _trajectoryDotsFactory;
 
+    private void OnDotsCreated(Transform[] createdDotsArray, GameObject dotsContainer)
+    {
+        _trajectoryShower.Initialize(createdDotsArray, dotsContainer);
+        _trajectoryShower.HideTrajectory();
+    }
     private void OnDragStarted()
     {
         _trajectoryShower.ShowTrajectory();
     }
 
-    private void OnDragContinued(Vector3 archerPosition, Vector2 currentForce)
+    private void OnDragContinued(Vector3 aimPoint, Vector2 currentForce)
     {
-        _trajectoryShower.UpdateTrajectory(_arrow.transform.position, currentForce);
+        _trajectoryShower.UpdateTrajectory(aimPoint, currentForce);
     }
 
     private void OnDragEnded()
@@ -38,6 +44,8 @@ public class ArcherPresenter : MonoBehaviour
         _dragShooting.DragStarted += OnDragStarted;
         _dragShooting.DragContinued += OnDragContinued;
         _dragShooting.DragEnded += OnDragEnded;
+
+        _trajectoryDotsFactory.DotsCreated += OnDotsCreated;
     }
 
     private void OnDisable()
@@ -45,5 +53,9 @@ public class ArcherPresenter : MonoBehaviour
         _dragShooting.DragStarted -= OnDragStarted;
         _dragShooting.DragContinued -= OnDragContinued;
         _dragShooting.DragEnded -= OnDragEnded;
+
+        _trajectoryDotsFactory.DotsCreated -= OnDotsCreated;
     }
+
+    private void Start() => _trajectoryDotsFactory.CreateDots();
 }
