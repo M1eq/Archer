@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
   m_Name: archer_bullet_SkeletonData
   m_EditorClassIdentifier: 
-  atlasAssets: []
+  atlasAssets:
+  - {fileID: 11400000, guid: 7686c322c3e90e74d8e4529cf549abad, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 7f0b4012772a0ed4a9507db4847174f3, type: 3}
   isUpgradingBlendModeMaterials: 0
