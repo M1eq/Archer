@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ArcherConfig
   m_EditorClassIdentifier: 
   <PushForce>k__BackingField: 5
+  <ArrowsInPool>k__BackingField: 30
   <ArrowPrefab>k__BackingField: {fileID: 4742251270359776307, guid: d073680db7785a14c9d5ffae5e743bd1, type: 3}
   <DotsCount>k__BackingField: 30
   <SpacingBetweenDots>k__BackingField: 0.06

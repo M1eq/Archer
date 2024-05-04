@@ -4,6 +4,7 @@ public class ArcherPresenter : MonoBehaviour
 {
     [SerializeField] private Arrow _arrow;
     [SerializeField] private DragShooting _dragShooting;
+    [SerializeField] private ArrowsFactory _arrowsFactory;
     [SerializeField] private TrajectoryShower _trajectoryShower;
     [SerializeField] private TrajectoryDotsFactory _trajectoryDotsFactory;
 
@@ -22,9 +23,14 @@ public class ArcherPresenter : MonoBehaviour
         _trajectoryShower.UpdateTrajectory(aimPoint, currentForce);
     }
 
-    private void OnDragEnded()
+    private void OnDragEnded()  
     {
         _trajectoryShower.HideTrajectory();
+    }
+    private void Start()
+    {
+        _trajectoryDotsFactory.CreateDots();
+        _arrowsFactory.TryCreateArrows();
     }
 
     private void Update()
@@ -56,6 +62,4 @@ public class ArcherPresenter : MonoBehaviour
 
         _trajectoryDotsFactory.DotsCreated -= OnDotsCreated;
     }
-
-    private void Start() => _trajectoryDotsFactory.CreateDots();
 }
