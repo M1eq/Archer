@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DragShooting : MonoBehaviour
+public class DragShooter : MonoBehaviour
 {
     public bool Dragging => _dragging;
 
@@ -11,15 +11,23 @@ public class DragShooting : MonoBehaviour
 
     [SerializeField] private ArcherConfig _archerConfig;
     [SerializeField] private Transform _aimPoint;
-    [SerializeField] private Arrow _arrow;
 
     private bool _dragging;
     private float _distance;
     private Camera _mainCamera;
+    private Arrow _arrow;
     private Vector2 _startDragPoint;
     private Vector2 _endDragPoint;
-    private Vector2 _direction;
     private Vector2 _shootForce;
+    private Vector2 _direction;
+
+    public void Initialize(Arrow deactivatedArrow)
+    {
+        _arrow = deactivatedArrow;
+        _arrow.transform.localScale = Vector3.one;
+        _arrow.transform.position = _aimPoint.position;
+        _arrow.transform.rotation = Quaternion.identity;
+    }
 
     public void StartDrag()
     {
@@ -35,6 +43,7 @@ public class DragShooting : MonoBehaviour
         _dragging = false;
         DragEnded?.Invoke();
 
+        _arrow.gameObject.SetActive(true);
         _arrow.UnfreezePosition();
         _arrow.Push(_shootForce);
     }

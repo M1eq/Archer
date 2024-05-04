@@ -2,14 +2,24 @@ using UnityEngine;
 
 public class ArcherPresenter : MonoBehaviour
 {
-    [SerializeField] private Arrow _arrow;
-    [SerializeField] private DragShooting _dragShooting;
+    [SerializeField] private Transform _gameArea;
+    [SerializeField] private DragShooter _dragShooter;
     [SerializeField] private ArrowsFactory _arrowsFactory;
     [SerializeField] private TrajectoryShower _trajectoryShower;
     [SerializeField] private TrajectoryDotsFactory _trajectoryDotsFactory;
     [SerializeField] private ArcherAnimationLauncher _archerAnimationLauncher;
 
     private void OnDragStarted() => _trajectoryShower.ShowTrajectory();
+    private void OnArrowsCreated() => TryInitializeDragShooter();
+
+    private void TryInitializeDragShooter()
+    {
+        if (_arrowsFactory.TryGetDeactivatedArrow(out Arrow deactivatedArrow))
+        {
+            //deactivatedArrow.transform.parent = _gameArea;
+            _dragShooter.Initialize(deactivatedArrow);
+        }
+    }
 
     private void OnDotsCreated(Transform[] createdDotsArray, GameObject dotsContainer)
     {
@@ -26,6 +36,8 @@ public class ArcherPresenter : MonoBehaviour
     {
         _trajectoryShower.HideTrajectory();
         _archerAnimationLauncher.LaunchShootAnimation();
+        _arrowsFactory.TryRefreshPool();
+        TryInitializeDragShooter();
     }
 
     private void Start()
@@ -40,32 +52,34 @@ public class ArcherPresenter : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            _dragShooting.StartDrag();
+            _dragShooter.StartDrag();
 
         if (Input.GetMouseButtonUp(0))
-            _dragShooting.EndDrag();
+            _dragShooter.EndDrag();
 
-        if (_dragShooting.Dragging)
-            _dragShooting.Drag();
+        if (_dragShooter.Dragging)
+            _dragShooter.Drag();
 
         _archerAnimationLauncher.TryUpdateTargetBoneRotation();
     }
 
     private void OnEnable()
     {
-        _dragShooting.DragStarted += OnDragStarted;
-        _dragShooting.DragContinued += OnDragContinued;
-        _dragShooting.DragEnded += OnDragEnded;
+        _dragShooter.DragContinued += OnDragContinued;
+        _dragShooter.DragStarted += OnDragStarted;
+        _dragShooter.DragEnded += OnDragEnded;
 
+        _arrowsFactory.ArrowsCreated += OnArrowsCreated;
         _trajectoryDotsFactory.DotsCreated += OnDotsCreated;
     }
 
     private void OnDisable()
     {
-        _dragShooting.DragStarted -= OnDragStarted;
-        _dragShooting.DragContinued -= OnDragContinued;
-        _dragShooting.DragEnded -= OnDragEnded;
+        _dragShooter.DragContinued -= OnDragContinued;
+        _dragShooter.DragStarted -= OnDragStarted;
+        _dragShooter.DragEnded -= OnDragEnded;
 
+        _arrowsFactory.ArrowsCreated -= OnArrowsCreated;
         _trajectoryDotsFactory.DotsCreated -= OnDotsCreated;
     }
 }

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PushForce>k__BackingField: 10
   <ArrowsInPool>k__BackingField: 30
+  <ArrowsForPoolRefresh>k__BackingField: 25
   <ArrowPrefab>k__BackingField: {fileID: 4742251270359776307, guid: d073680db7785a14c9d5ffae5e743bd1, type: 3}
   <DotsCount>k__BackingField: 12
   <SpacingBetweenDots>k__BackingField: 0.03
-  <DotMinScale>k__BackingField: 0.1
-  <DotMaxScale>k__BackingField: 0.3
+  <DotMinScale>k__BackingField: 0.2
+  <DotMaxScale>k__BackingField: 0.6
   <DotPrefab>k__BackingField: {fileID: 4946172767012657377, guid: b3b72d2fcf57b04498b8a15ac8e03235, type: 3}
