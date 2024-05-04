@@ -18,14 +18,14 @@ public class TrajectoryShower : MonoBehaviour
         _dotsContainer = dotsContainer;
     }
 
-    public void UpdateTrajectory(Vector3 aimPoint, Vector2 currentForce)
+    public void UpdateTrajectory(Vector3 arrowPosition, Vector2 currentForce)
     {
         _timeStamp = _archerConfig.SpacingBetweenDots;
 
         for (int i = 0; i < _dotsArray.Length; i++)
         {
-            _dotPosition.x = (aimPoint.x + currentForce.x * _timeStamp);
-            _dotPosition.y = (aimPoint.y + currentForce.y * _timeStamp) - (Physics2D.gravity.magnitude * _timeStamp * _timeStamp) / 2;
+            _dotPosition.x = (arrowPosition.x + currentForce.x * _timeStamp);
+            _dotPosition.y = (arrowPosition.y + currentForce.y * _timeStamp) - (Physics2D.gravity.magnitude * _timeStamp * _timeStamp) / 2;
 
             _dotsArray[i].position = _dotPosition;
             _timeStamp += _archerConfig.SpacingBetweenDots;
