@@ -58,5 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabaa74e5d7451b4bbdf771c4dbf7b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneNamesConfig: {fileID: 11400000, guid: 032f84b40b6130b4faeebd439f8ecf9b, type: 2}
   _gameAreaPrefab: {fileID: 4611010534285410612, guid: 276c31a22806872438d2c5f2c6a2dec1, type: 3}
   _hudPrefab: {fileID: 8527675331524535650, guid: 5edc18adb6416104c9ee61b3aec1b25c, type: 3}

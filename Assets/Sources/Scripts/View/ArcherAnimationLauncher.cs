@@ -12,9 +12,9 @@ public class ArcherAnimationLauncher : MonoBehaviour
 
     [Space(10), SpineBone(dataField: "skeletonAnimation")]
     [SerializeField] private string _boneName;
-    [SerializeField] private Camera _mainCamera;
 
     private AnimationReferenceAsset _currentAnimation;
+    private Camera _mainCamera;
     private Bone _targetBone;
 
     private bool CanUpdateTargetBoneRotation => _currentAnimation == _aimAnimation && _targetBone != null;
@@ -42,5 +42,7 @@ public class ArcherAnimationLauncher : MonoBehaviour
         _skeletonAnimation.AnimationState.SetAnimation(0, animation, loop);
         _currentAnimation = animation;
     }
+
+    private void Start() => _mainCamera = Camera.main;
 }
 

@@ -7,6 +7,6 @@ public class Game
     public Game(GameBootstrapper gameBootstrapper, AssetProvider assetProvider)
     {
         GameSceneFactory gameSceneFactory = new GameSceneFactory(assetProvider.GameAreaPrefab, assetProvider.HudPrefab);
-        _gameStateMachine = new GameStateMachine(new SceneLoader(gameBootstrapper), gameSceneFactory);
+        _gameStateMachine = new GameStateMachine(new SceneLoader(gameBootstrapper), gameSceneFactory, assetProvider.SceneNamesConfig);
     }
 }
