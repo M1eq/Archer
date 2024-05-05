@@ -15,10 +15,7 @@ public class ArcherPresenter : MonoBehaviour
     private void TryInitializeDragShooter()
     {
         if (_arrowsFactory.TryGetDeactivatedArrow(out Arrow deactivatedArrow))
-        {
-            //deactivatedArrow.transform.parent = _gameArea;
             _dragShooter.Initialize(deactivatedArrow);
-        }
     }
 
     private void OnDotsCreated(Transform[] createdDotsArray, GameObject dotsContainer)

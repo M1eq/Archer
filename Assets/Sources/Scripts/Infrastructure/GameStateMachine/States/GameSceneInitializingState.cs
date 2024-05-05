@@ -7,9 +7,5 @@ public class GameSceneInitializingState : IState
         _gameSceneFactory = gameSceneFactory;
     }
 
-    public void Enter()
-    {
-        _gameSceneFactory.CreateGameArea();
-        _gameSceneFactory.CreateHud();
-    }
+    public void Enter() => _gameSceneFactory.CreateGameArea();
 }
