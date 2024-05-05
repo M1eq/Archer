@@ -6,12 +6,13 @@ public class GameStateMachine
     private readonly Dictionary<Type, IState> _states;
     private IState _activeState;
 
-    public GameStateMachine(SceneLoader sceneLoader)
+    public GameStateMachine(SceneLoader sceneLoader, GameSceneFactory gameSceneFactory)
     {
         _states = new Dictionary<Type, IState>()
         {
             [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-            [typeof(GameSceneLoadingState)] = new GameSceneLoadingState(sceneLoader)
+            [typeof(GameSceneLoadingState)] = new GameSceneLoadingState(sceneLoader, this),
+            [typeof(GameSceneInitializingState)] = new GameSceneInitializingState(gameSceneFactory),
         };
     }
 

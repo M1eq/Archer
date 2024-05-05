@@ -1,6 +1,6 @@
 public class BootstrapState : IState
 {
-    private const string InitialSceneName = "Initial";
+    private const string InitialSceneName = "InitialScene";
     private readonly GameStateMachine _gameStateMachine;
     private readonly SceneLoader _sceneLoader;
 

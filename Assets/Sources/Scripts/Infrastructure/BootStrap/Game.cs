@@ -4,8 +4,9 @@ public class Game
 
     public void ActivateBootstrapState() => _gameStateMachine.Enter<BootstrapState>();
 
-    public Game(GameBootstrapper gameBootstrapper)
+    public Game(GameBootstrapper gameBootstrapper, AssetProvider assetProvider)
     {
-        _gameStateMachine = new GameStateMachine(new SceneLoader(gameBootstrapper));
+        GameSceneFactory gameSceneFactory = new GameSceneFactory(assetProvider.GameAreaPrefab, assetProvider.HudPrefab);
+        _gameStateMachine = new GameStateMachine(new SceneLoader(gameBootstrapper), gameSceneFactory);
     }
 }
