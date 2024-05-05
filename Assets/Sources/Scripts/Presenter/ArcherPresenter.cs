@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ArcherPresenter : MonoBehaviour
 {
-    [SerializeField] private Transform _gameArea;
     [SerializeField] private DragShooter _dragShooter;
     [SerializeField] private ArrowsFactory _arrowsFactory;
     [SerializeField] private TrajectoryShower _trajectoryShower;
